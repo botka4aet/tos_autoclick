@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-import time
 from pyautogui import * 
 import pyautogui 
 import pyscreeze
@@ -10,16 +9,64 @@ from pynput.keyboard import Key, Listener
 pyscreeze.USE_IMAGE_NOT_FOUND_EXCEPTION = False
  
 
-# 1 event page
-# 2 event fight
-# 3 event moving left
-# 4 event moving right
+# 0 - битва эвент
+# 1 - битва эвент, ожидание победы
+# 2 - карта эвента 
+# 10 - битва арена
+# 11 - битва арена, ожидание победы
+# 12 - меню арены 
+# 20 - битва сюжет
+# 21 - битва сюжет, ожидание победы
+# 22 - карта сюжета 
+# 30 - битва покорение
+# 31 - битва покорение, ожидание победы
+# 32 - карта покорения 
 current_state = 1
-
 
 clicks = 0
 loop = False
 after_id = ''
+
+def eloop():
+    global current_state,loop,clicks
+    if current_state % 10 == 0:
+        location = pyautogui.locateOnScreen('fight_skip.png', grayscale=False)   
+        if location != None:
+            pyautogui.click(location)
+            current_state += 1
+            clicks = 0
+    elif current_state % 10 == 1:
+        location = pyautogui.locateOnScreen('win_button.png', confidence=0.9)    
+        if location != None:
+            pyautogui.click(location)
+            current_state += 1
+            clicks = 0
+            sleep(9)
+        else:
+            clicks += 1
+            if clicks >= 9:
+              current_state += 1
+              clicks = 0
+    elif current_state == 2:
+        location = pyautogui.locateOnScreen('event_fight.png', confidence=0.9)    
+        if location != None:
+            pyautogui.click(location)
+            current_state = 0
+        else:
+            if 0 <= clicks < 15:
+                location = pyautogui.locateOnScreen('move_left.png', confidence=0.9)
+                if location != None:
+                    pyautogui.click(location)
+            elif clicks == 15:
+                clicks = -15 
+            else:
+                location = pyautogui.locateOnScreen('move_right.png', confidence=0.9)
+                if location != None:
+                    pyautogui.click(location)
+            clicks += 1
+            label["text"] = clicks
+    after_id = root.after(1000,eloop)        
+
  
 def event_page():
     global current_state,loop,clicks
@@ -111,7 +158,7 @@ def click_button():
     loop = not loop
     if loop:
         btn["text"] = f"Stop"
-        event_page()
+        eloop()
     else:
         btn["text"] = f"Start"
 
