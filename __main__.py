@@ -22,13 +22,14 @@ loop = False
 after_id = ''
  
 def event_page():
-    global current_state,loop
+    global current_state,loop,clicks
     if not loop:
         return
     location = pyautogui.locateOnScreen('event_fight.png', confidence=0.9)
     if location != None:
         pyautogui.click(location)
         current_state = 2
+        clicks = 0
         after_id = root.after(1000,start_fight)    
     else:
         if current_state == 4:
@@ -57,8 +58,13 @@ def check_win():
         pyautogui.click(location)
         if current_state == 2:
            clicks = 0
-           after_id = root.after(10000,event_page)    
-    after_id = root.after(1000,check_win)    
+           after_id = root.after(10000,event_page)
+    else:
+        clicks += 1
+        if clicks >= 5:
+           after_id = root.after(10000,event_page)
+        else:    
+            after_id = root.after(1000,check_win)    
 
 
 def event_left():
