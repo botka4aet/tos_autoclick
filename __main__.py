@@ -105,6 +105,7 @@ def eloop():
         if location != None:
             pyautogui.click(location)
             current_state = 0
+            clicks = 0
         else:
             clicks += 1
             if 0 <= clicks < 15:
@@ -140,7 +141,16 @@ def eloop():
             if location != None:
                 current_state -= 3
                 pyautogui.click(location)
-    after_id = root.after(1000,eloop)        
+    elif current_state % 10 == 1:
+        clicks += 1
+        sleep(1)
+        if clicks > 10:
+            current_state += 1
+            clicks = 0    
+    label["text"] = f"Clicks {clicks}"
+    labelstate["text"] = f"State {current_state}"
+
+    after_id = root.after(1500,eloop)        
 
  
 def event_page():
