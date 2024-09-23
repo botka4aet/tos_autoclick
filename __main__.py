@@ -44,20 +44,26 @@ after_id = ''
 def search_location():
     location = pyautogui.locateOnScreen('event_map.png', grayscale=False)   
     if location != None:
-        return 2
+        return 2,0
     location = pyautogui.locateOnScreen('main_arena.png', grayscale=False)   
     if location != None:
-        return -1
+        return -1,0
     location = pyautogui.locateOnScreen('story_map.png', grayscale=False)   
     if location != None:
-        return 22
+        return 22,0
     location = pyautogui.locateOnScreen('arena_fight.png', grayscale=False)   
     if location != None:
-        return 12
+        return 12,0
     location = pyautogui.locateOnScreen('win_button.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
-    return -2
+    location = pyautogui.locateOnScreen('event_close.png', confidence=0.9)    
+    if location != None:
+        pyautogui.click(location)
+    location = pyautogui.locateOnScreen('arena_close.png', confidence=0.9)    
+    if location != None:
+        pyautogui.click(location)
+    return -2,20
 
 def eloop():
     global current_state,loop,clicks,target_state,time_crusade_pause,time_crusade_resume
@@ -71,8 +77,8 @@ def eloop():
         current_state += 1
         sleep(5)
 
-    while current_state == -2:
-        current_state = search_location()
+    if current_state == -2 or clicks > 15:
+        current_state,clicks = search_location()
 
     if time_crusade_pause <= datetime.datetime.now().time() <= time_crusade_resume and current_state % 10 == 2:
         sleep(5*60)
@@ -125,11 +131,11 @@ def eloop():
             current_state = 0
             clicks = -1
         else:
-            if 0 <= clicks < 15:
+            if clicks < 15:
                 location = pyautogui.locateOnScreen('move_left.png', confidence=0.9)
                 if location != None:
                     pyautogui.click(location)
-            elif clicks == 15:
+            else:
                 target_state = 1
                 location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
                 if location != None:
