@@ -42,25 +42,31 @@ loop = False
 after_id = ''
 
 def search_location():
-    location = pyautogui.locateOnScreen('event_map.png', grayscale=False)   
+    location = pyautogui.locateOnScreen('img/event_map.png', grayscale=False)   
     if location != None:
         return 2,0
-    location = pyautogui.locateOnScreen('main_arena.png', grayscale=False)   
+    location = pyautogui.locateOnScreen('img/main_arena.png', grayscale=False)   
     if location != None:
         return -1,0
-    location = pyautogui.locateOnScreen('story_map.png', grayscale=False)   
+    location = pyautogui.locateOnScreen('img/story_map.png', grayscale=False)   
     if location != None:
         return 22,0
-    location = pyautogui.locateOnScreen('arena_fight.png', grayscale=False)   
+    location = pyautogui.locateOnScreen('img/arena_fight.png', grayscale=False)   
     if location != None:
         return 12,0
-    location = pyautogui.locateOnScreen('win_button.png', confidence=0.9)    
+    location = pyautogui.locateOnScreen('img/win_button.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
-    location = pyautogui.locateOnScreen('event_close.png', confidence=0.9)    
+    location = pyautogui.locateOnScreen('img/event_close.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
-    location = pyautogui.locateOnScreen('arena_close.png', confidence=0.9)    
+    location = pyautogui.locateOnScreen('img/event_reward.png', confidence=0.9)    
+    if location != None:
+        pyautogui.click(location)
+    location = pyautogui.locateOnScreen('img/arena_close.png', confidence=0.9)    
+    if location != None:
+        pyautogui.click(location)
+    location = pyautogui.locateOnScreen('img/sale_banner.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
     return -2,20
@@ -71,7 +77,7 @@ def eloop():
     if not loop:
         return
     
-    location = pyautogui.locateOnScreen('win_button.png', confidence=0.9)    
+    location = pyautogui.locateOnScreen('img/win_button.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
         current_state += 1
@@ -82,17 +88,17 @@ def eloop():
 
     if time_crusade_pause <= datetime.datetime.now().time() <= time_crusade_resume and current_state % 10 == 2:
         sleep(5*60)
-        location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
+        location = pyautogui.locateOnScreen('img/event_close.png', grayscale=False)
         if location != None:
             pyautogui.click(location)
-        location = pyautogui.locateOnScreen('arena_close.png', grayscale=False)
+        location = pyautogui.locateOnScreen('img/arena_close.png', grayscale=False)
         if location != None:
             pyautogui.click(location)
         sleep(5)
-        location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
+        location = pyautogui.locateOnScreen('img/event_close.png', grayscale=False)
         if location != None:
             pyautogui.click(location)
-        location = pyautogui.locateOnScreen('arena_close.png', grayscale=False)
+        location = pyautogui.locateOnScreen('img/arena_close.png', grayscale=False)
         if location != None:
             pyautogui.click(location)
         current_state = -2
@@ -101,65 +107,65 @@ def eloop():
     if current_state == -1:
         current_state = -2
         if target_state == 0:
-            location = pyautogui.locateOnScreen('main_event.png', grayscale=False)   
+            location = pyautogui.locateOnScreen('img/main_event.png', grayscale=False)   
             if location != None:
                 pyautogui.click(location)
         elif target_state == 1:
-            location = pyautogui.locateOnScreen('main_arena.png', grayscale=False)   
+            location = pyautogui.locateOnScreen('img/main_arena.png', grayscale=False)   
             if location != None:
                 pyautogui.click(location)
         elif target_state == 2:
-            location = pyautogui.locateOnScreen('main_story.png', grayscale=False)   
+            location = pyautogui.locateOnScreen('img/main_story.png', grayscale=False)   
             if location != None:
                 pyautogui.click(location)
         elif target_state == 3:
-            location = pyautogui.locateOnScreen('main_crusade.png', grayscale=False)   
+            location = pyautogui.locateOnScreen('img/main_crusade.png', grayscale=False)   
             if location != None:
                 pyautogui.click(location)
 ### Битва                
     elif current_state % 10 == 0:
-        location = pyautogui.locateOnScreen('fight_skip.png', grayscale=False)   
+        location = pyautogui.locateOnScreen('img/fight_skip.png', grayscale=False)   
         if location != None:
             pyautogui.click(location)
             current_state += 1
             clicks = -1
 ### Меню эвента               
     elif current_state == 2:
-        location = pyautogui.locateOnScreen('event_fight.png', confidence=0.9)    
+        location = pyautogui.locateOnScreen('img/event_fight.png', confidence=0.9)    
         if location != None:
             pyautogui.click(location)
             current_state = 0
             clicks = -1
         else:
             if clicks < 15:
-                location = pyautogui.locateOnScreen('move_left.png', confidence=0.9)
+                location = pyautogui.locateOnScreen('img/move_left.png', confidence=0.9)
                 if location != None:
                     pyautogui.click(location)
             else:
                 target_state = 1
-                location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
+                location = pyautogui.locateOnScreen('img/event_close.png', grayscale=False)
                 if location != None:
                     pyautogui.click(location)
                     current_state = -2
                     clicks = -1
 ### Меню арены               
     elif current_state == 12:
-        location = pyautogui.locateOnScreen('arena_open.png', confidence=0.9)    
+        location = pyautogui.locateOnScreen('img/arena_open.png', confidence=0.9)    
         if location != None:
             pyautogui.click(location)
             current_state -= 1
         else:
             current_state = 13 
     elif current_state == 13:
-        location = pyautogui.locateOnScreen('arena_empty.png', confidence=0.9)    
+        location = pyautogui.locateOnScreen('img/arena_empty.png', confidence=0.9)    
         if location == None:
             target_state = 0
-            location = pyautogui.locateOnScreen('arena_close.png', confidence=0.9)    
+            location = pyautogui.locateOnScreen('img/arena_close.png', confidence=0.9)    
             if location != None:
                 current_state = -2
                 pyautogui.click(location)
         else:
-            location = pyautogui.locateOnScreen('arena_fight.png', confidence=0.9)    
+            location = pyautogui.locateOnScreen('img/arena_fight.png', confidence=0.9)    
             if location != None:
                 current_state -= 3
                 pyautogui.click(location)
