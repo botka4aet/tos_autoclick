@@ -58,8 +58,6 @@ arr_state: List[int] = [2,-1,22,12,-2,-2,-2,-2,-2]
 
 
 def search_location():
-<<<<<<< Updated upstream
-=======
     for idx, img in enumerate(arr_img):
         state = arr_state[idx]
         location = pyautogui.locateOnScreen(img, grayscale=False)
@@ -71,7 +69,6 @@ def search_location():
     return -2,20
 
 def search_location1():
->>>>>>> Stashed changes
     location = pyautogui.locateOnScreen('event_map.png', grayscale=False)   
     if location != None:
         return 2,0
@@ -90,9 +87,6 @@ def search_location1():
     location = pyautogui.locateOnScreen('event_close.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
-<<<<<<< Updated upstream
-    location = pyautogui.locateOnScreen('arena_close.png', confidence=0.9)    
-=======
     location = pyautogui.locateOnScreen('event_reward.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
@@ -100,49 +94,24 @@ def search_location1():
     if location != None:
         pyautogui.click(location)
     location = pyautogui.locateOnScreen('sale_banner.png', confidence=0.9)    
->>>>>>> Stashed changes
     if location != None:
         pyautogui.click(location)
     return -2,20
 
 def eloop():
     global current_state,loop,clicks,target_state,time_crusade_pause,time_crusade_resume
-
     if not loop:
         return
-    
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
     location = pyautogui.locateOnScreen('win_button.png', confidence=0.9)    
     if location != None:
         pyautogui.click(location)
         current_state += 1
         sleep(5)
-
     if current_state == -2 or clicks > 15:
        current_state,clicks = search_location()
-#        current_state = search_location()
 
     if time_crusade_pause <= datetime.datetime.now().time() <= time_crusade_resume and current_state % 10 == 2:
         sleep(5*60)
-<<<<<<< Updated upstream
-        location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
-        if location != None:
-            pyautogui.click(location)
-        location = pyautogui.locateOnScreen('arena_close.png', grayscale=False)
-        if location != None:
-            pyautogui.click(location)
-        sleep(5)
-        location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
-        if location != None:
-            pyautogui.click(location)
-        location = pyautogui.locateOnScreen('arena_close.png', grayscale=False)
-        if location != None:
-            pyautogui.click(location)
-        current_state = -2
-=======
         # location = pyautogui.locateOnScreen('event_close.png', grayscale=False)
         # if location != None:
         #     pyautogui.click(location)
@@ -157,7 +126,6 @@ def eloop():
         # if location != None:
         #     pyautogui.click(location)
         # current_state = -2
->>>>>>> Stashed changes
 
 ### Выбор карты
     if current_state == -1:
@@ -182,10 +150,6 @@ def eloop():
 ### Битва                
     elif current_state % 10 == 0:
         location = pyautogui.locateOnScreen('fight_skip.png', grayscale=False)   
-<<<<<<< Updated upstream
-=======
-#        location = pyautogui.locateOnScreen('fight_skip.png', grayscale=False)   
->>>>>>> Stashed changes
         if location != None:
             pyautogui.click(location)
             current_state += 1
@@ -198,11 +162,7 @@ def eloop():
             current_state = 0
             clicks = -1
         else:
-<<<<<<< Updated upstream
-            if clicks < 15:
-=======
             if clicks < 14:
->>>>>>> Stashed changes
                 location = pyautogui.locateOnScreen('move_left.png', confidence=0.9)
                 if location != None:
                     pyautogui.click(location)
