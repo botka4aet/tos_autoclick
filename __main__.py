@@ -110,6 +110,7 @@ def eloop():
     if location != None:
         pyautogui.click(location)
         current_state += 1
+        clicks = 0
         sleep(5)
     if current_state == -2 or clicks > 15:
         current_state, clicks = search_location()
@@ -172,7 +173,7 @@ def eloop():
         else:
             if clicks < 14:
                 location = pyautogui.locateOnScreen(
-                    'move_left.png', confidence=0.9)
+                    'event_left.png', confidence=0.9)
                 if location != None:
                     pyautogui.click(location)
             else:
